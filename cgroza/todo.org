@@ -1,0 +1,23 @@
+* Tasks
+** TODO Create buttons in the control panel
+Next generation, settings and reset.
+
+** TODO Fix turning algorithm
+- [X]Debug algorithm: measure counter-clockwise angle from previous to next.\\
+  Use the cross product to differentiate concavity.
+  [[https://en.wikipedia.org/wiki/Cross_product#/media/File:Cross_product.gif][Cross Product Description]] 
+- Create turning function for the reverse direction.
+* Methods
+
+** Polygons defined as lists of points
+** Comparison of polygons by integral of turning function
+[[https://sites.google.com/site/turningfunctions/][Turning function algorithm]]
+** Mutation of points
+
+* Usage
+The buttons on the top of the window can be used.
+To proceed to the next generation, press enter.
+To open the configuration window, press space.
+* Conclusion
+** Number of generations necessary to achieve shapes
+** Fidelity of the reproduction of the target polygon
