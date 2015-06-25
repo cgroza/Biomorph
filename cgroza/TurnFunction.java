@@ -108,7 +108,7 @@ public class TurnFunction
                 {
                     TurnPoint left = it.next();
                     TurnPoint right = it.next();
-                    if(left.x <= x && right.x >= x)
+                    if(left.x <= x && right.x > x)
                         return left.y;
                     it.previous();
                 }

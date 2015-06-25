@@ -24,9 +24,21 @@ class Test
 
             TurnFunction f1 = new TurnFunction(Polygons.getTurnPoints(h.toVectorList()));
             TurnFunction f2 = new TurnFunction(Polygons.getTurnPoints(g.toVectorList()));
+            TurnFunction difference = f1.substract(f2);
+            
+            System.out.println(f1.getValueAt(0.25));
+            System.out.println(f2.getValueAt(0.25));
 
-
-            System.out.println(h.getSimilarity(h));
-            System.out.println(f1.distanceWith(f2));
+            printTurnFunction(f1);
+            printTurnFunction(f2);
+            printTurnFunction(difference);
+        }
+    public static void printTurnFunction(TurnFunction f)
+        {
+            for(TurnPoint p : f.getTurnPoints())
+            {
+                System.out.println(p.x + " " + p.y);
+            }
+            System.out.println();
         }
 }
