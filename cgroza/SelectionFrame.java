@@ -50,18 +50,18 @@ class SelectionFrame extends JFrame
                 public void keyTyped(KeyEvent e) {}
             });
 
-        // panel with grid layout to organize the specimens
+        // Panel with grid layout to organize the specimens.
         specimenPanel = new JPanel(new GridLayout(H_SIZE, V_SIZE));
-        // create the specimens
+        // Create the specimens.
         LinkedList<Point> startPs = new LinkedList();
-        // stock specimen
+        // Stock specimen.
         startPs.add(new Point(15,15));
         startPs.add(new Point(15,60));
         startPs.add(new Point(30, 45));
         startPs.add(new Point(30, 70));
         Genome startGenome = new Genome(startPs);
         specimens = new LinkedList<Specimen>();
-        // populate the specimen grid
+        // Populate the specimen grid.
         for(int i = 0; i < H_SIZE * V_SIZE; i++)
         {
             Specimen s = new Specimen(new Genome(startGenome));
@@ -120,23 +120,25 @@ class SelectionFrame extends JFrame
             }
             return selected;
         }
+    // Creates a new array of specimens by mutating the selected ones
+    // repeatedly.
     public void nextGeneration()
         {
             LinkedList<Specimen> selected = getSelectedSpecimens();
-            // find number of offspring per selected specimen
+            // Find number of offspring per selected specimen.
             int nSelected = selected.size();
-            if(nSelected == 0) return; // nothing to do if no selection
+            if(nSelected == 0) return; // Nothing to do if no selection.
 
             int freeSpecimens = H_SIZE * V_SIZE - nSelected;
-            // yields whole rounded down number
+            // Yields whole rounded down number.
             int offspringPerSelectedSpecimen = freeSpecimens / nSelected;
-            // generate mutations
+            // Generate mutations.
             LinkedList<Genome> mutations = new LinkedList();
             for(Specimen s : selected)
             {
                 mutations.addAll(s.produceOffspring(offspringPerSelectedSpecimen));
             }
-            // replace obsolete genomes
+            // Replace obsolete genomes.
             for(Specimen s : specimens)
             {
                 if(!selected.contains(s))
@@ -145,12 +147,12 @@ class SelectionFrame extends JFrame
                 }
             }
             getContentPane().repaint();
-            // increment the generation number
+            // Increment the generation number.
             generationCount ++;
             generationDisplay.setText(Integer.toString(generationCount));
         }
 
-    // main function. Starts program excution.
+    // Main function. Starts program execution.
     public static void main(String[] args)
         {
             SelectionFrame mainFrame = new SelectionFrame("Simulation");

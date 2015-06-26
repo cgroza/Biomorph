@@ -36,42 +36,37 @@ public class Specimen extends JComponent
                         {
                             clicked();
                         }
-                    public void mouseExited(MouseEvent e)
-                        {
-                        }
-                    public void mouseEntered(MouseEvent e)
-                        {
-                        }
-                    public void mouseReleased(MouseEvent e)
-                        {
-                        }
-                    public void mousePressed(MouseEvent e)
-                        {
-                        }
+                    public void mouseExited(MouseEvent e) {}
+                    public void mouseEntered(MouseEvent e) {}
+                    public void mouseReleased(MouseEvent e) {}
+                    public void mousePressed(MouseEvent e) {}
                 });
             setVisible(true);
 
         }
-    public boolean isSelected()   // returns selected
+    // Returns true if this specimen is selected. False, otherwise.
+    public boolean isSelected()
         {
             return selected;
         }
-    public Genome getGenome()    // returns genome
+    // Returns the Genome encapsulated in this Specimen.
+    public Genome getGenome()
         {
             return genome;
         }
+    // Sets the Genome that defines this Specimen.
     public void setGenome(Genome g)
         {
             genome = g;
         }
-    // API function. It draws the polygons represented by the genomes in its
-    // respective component.
+    // Swing API function. It draws the polygons represented by the genomes in
+    // its respective component.
     public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
 
             confineGenome();
-            // construct swing polygon from genome
+            // Construct swing polygon from genome.
             Polygon polygon = new Polygon();
             for(Point p : genome.getPoints())
             {
@@ -80,7 +75,7 @@ public class Specimen extends JComponent
             g.setColor(Color.RED);
             g.drawPolygon(polygon);
         }
-    // produceOffspring returns N number of mutated copies of itself.
+    // Returns N number of mutated copies of itself.
     public LinkedList<Genome> produceOffspring(int n)
         {
             LinkedList<Genome> offspring = new LinkedList<Genome>();
@@ -88,34 +83,41 @@ public class Specimen extends JComponent
                 offspring.add(genome.mutate());
             return offspring;
         }
+    // Toggles the selection status.
     public void clicked()
         {
             selected = !selected;
-            // change border color
+            // Change border color depending on selection status.
             if(selected)
                 setBorder(BorderFactory.createLineBorder(Color.RED, BORDER_WIDTH));
             else
                 setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
+    // Sets status to selected.
     public void select()
         {
             selected = true;
             setBorder(BorderFactory.createLineBorder(Color.RED, BORDER_WIDTH));
         }
+    // Sets status to unselected.
     public void unselect()
         {
             selected = false;
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
+    // Makes the Genome's points fit in the limited area of a Specimen. Prevents
+    // drawing polygons beyond the borders of the Specimen. Pushes the polygon
+    // in the leftmost, uppermost region possible. If some points are still off
+    // border, they are truncated by placing them on the border of the Specimen.
     public void confineGenome()
         {
-            // used for displaying polygons inside the component in order to avoid shapes
-            // being drawn off the frame
+            // Used for displaying polygons inside the component in order to
+            // avoid shapes being drawn off the frame.
             int yDimension = (int) getSize().getHeight();
             int xDimension = (int) getSize().getWidth();
             
-            // take left most point, find distance to top edge
-            // take top most point, find distance to top edge
+            // Take left most point, find distance to top edge.
+            // Take top most point, find distance to top edge.
             LinkedList<Point> points = genome.getPoints();
             Point smallestPX = points.peek();
             Point smallestPY = points.peek();
@@ -126,13 +128,13 @@ public class Specimen extends JComponent
             }
             int xOffset = smallestPX.x - BORDER_WIDTH;
             int yOffset = smallestPY.y - BORDER_WIDTH;
-            // offset all points by X, Y
+            // Offset all points by X, Y.
             for(Point p : points)
             {
                 p.x -= xOffset;
                 p.y -= yOffset;
             }
-            // cut all points that are still beyond the borders of JComponent
+            // Cut all points that are still beyond the borders of JComponent.
             for(Point p : points)
             {
                 if(p.x > xDimension) p.x -= p.x - xDimension;

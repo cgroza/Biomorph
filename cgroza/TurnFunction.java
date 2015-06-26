@@ -76,6 +76,8 @@ public class TurnFunction
             }
             return area;
         }
+    // Returns a new turn function that represents the difference between this
+    // turn function and f.
     public TurnFunction substract(TurnFunction f)
         {
             // Find which function has more points (more detail).
@@ -92,12 +94,14 @@ public class TurnFunction
                                                           - f.getValueAt(x))));
             return new TurnFunction(subPoints);
         } 
+    // Squares the turn function.
     public void square()
         {
             // Square all y values.
             for(TurnPoint p : turnPoints)
                 p.y = Math.pow(p.y, 2.0);
         }
+    // Returns f(x) for this turning function.
     public double getValueAt(double x)
         {
             ListIterator<TurnPoint> it = turnPoints.listIterator(0);
@@ -119,16 +123,15 @@ public class TurnFunction
             }
             return 0;
         }
-    public int getNTurns()
-        {
-            return turnPoints.size();
-        }
+    // Returns the points that define the turn function.
     public LinkedList<TurnPoint> getTurnPoints()
         {
             return turnPoints;
         }
+    // Returns the distance with another turn function.
     public double distanceWith(TurnFunction f)
         {
+            // The distance is defined as sqrt(integral((f1(x) - f2(x))^2)).
             TurnFunction diff = substract(f);
             diff.square();
             return Math.sqrt(diff.integrate());

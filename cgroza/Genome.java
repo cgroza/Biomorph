@@ -19,16 +19,19 @@ class PolarPoint implements Comparable
 
     public PolarPoint(Point p, double centerX, double centerY )
         {
-            // convert cartesian point into polar point
+            // Convert cartesian point into polar point.
             point = p;
             angle = Math.atan2(p.y - centerY, p.x - centerX);
             if(angle < 0) angle += 2 * Math.PI;
             length = Math.sqrt(Math.pow(p.x - centerX , 2) +
                                Math.pow(p.y - centerY , 2));
         }
+    // Comparison function used in clockwise sorting.
     public int compareTo(Object p)
         {
-            // compare points by angle. If angles are equal, return 0.
+            // Compare points by angle. If angles are equal, compare by length.
+            // If length is larger, then this PolarPoint is smaller and
+            // vice-versa.
             if (((PolarPoint) p).angle < angle) return 1;
             else if (((PolarPoint) p).angle > angle) return -1;
             else
@@ -41,15 +44,15 @@ class PolarPoint implements Comparable
         }
 }
 // Implements topological sorting (clockwise) of points in a list.
-class TopologicalSort
+class ClockwiseSort
 {
     // After calling sort on a list of points, said points will be ordered as in
     // a polygon. The order in the list will correspong to the drawing order of
-    // points so that the polygon does not intersect iteself.
+    // points so that the polygon does not intersect itself.
     static void sort(LinkedList<Point> ps)
         {
-            // find center point that is equidistant from all points, which is the
-            // average of the x,y coordiates of all points
+            // Find center point that is equidistant from all points, which is
+            // the average of the x,y coordiates of all points.
             double centerX = 0;
             double centerY = 0;
             for(Point p: ps)
@@ -59,14 +62,15 @@ class TopologicalSort
             }
             centerY /= ps.size();
             centerX /= ps.size();
-            // make a polar points list for sorting
+            // Make a polar points list for sorting.
             LinkedList<PolarPoint> polarPs = new LinkedList<PolarPoint>();
             for(Point p : ps)
             {
                 polarPs.add(new PolarPoint(p, centerX, centerY));
             }
             Collections.sort(polarPs); //sort according to angle
-            // extract the points in clockwise order from ordered polar point list
+            // Extract the points in clockwise order from ordered polar point
+            // list.
             ps.clear();
             for(PolarPoint p : polarPs)
             {
@@ -100,7 +104,7 @@ public class Genome
 
     public Genome(LinkedList<Point> segs)
         {
-            TopologicalSort.sort(segs);
+            ClockwiseSort.sort(segs);
             points = segs;
             nPoints = segs.size();
         }
@@ -129,7 +133,7 @@ public class Genome
             Random rand = new Random();
             // Create a new genome and mutate it.
             Genome g = new Genome(this);
-            // Mutate number of points. restricted to +/- 3;
+            // Mutate number of points. restricted to +/- 3.
             boolean willMutate = rand.nextInt(101) <= SEGMENT_MUTATION_RATE;
             // Find random variation [-2, 2]. The variation must respect the minimum
             // and maximum point number.
@@ -156,7 +160,7 @@ public class Genome
             }
             else if(variation < 0 && g.getPoints().size() > MIN__POINTS)
             {
-                // remove random points from genome
+                // Remove random points from genome.
                 while(variation < 0 && g.getPoints().size() > MIN__POINTS)
                 {
                     g.getPoints().remove(rand.nextInt(g.getPoints().size()));
@@ -181,7 +185,7 @@ public class Genome
             // Therefore, it is necessary to reorder the list of points to
             // mimic their order within the polygon (clockwise). This will avoid
             // drawing figures that intersect themselves.
-            TopologicalSort.sort(g.getPoints());
+            ClockwiseSort.sort(g.getPoints());
             return g;
         }
     // Returns the number of vertices that define the polygon.

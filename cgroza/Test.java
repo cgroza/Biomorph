@@ -17,7 +17,7 @@ class Test
             points.add(p2);
             points.add(p3);
             points.add(p4);
-            TopologicalSort.sort(points);
+            ClockwiseSort.sort(points);
             Genome g = new Genome(points);
             Genome h = new Genome(g);
             h.getPoints().removeLast();

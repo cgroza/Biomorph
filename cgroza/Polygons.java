@@ -20,11 +20,12 @@ class Polygons
         {
             Polygons.scalePolygonToUnit(vs);
             ListIterator<Vector> it = vs.listIterator(0);
-            // contains the points of the turn function
+            // Contains the points of the turn function.
             LinkedList<TurnPoint> turnPoints =
                 new LinkedList<TurnPoint>();
-            double x_var = 0;  // keeps track of the independent variable
-            double y_var = 0;
+            double x_var = 0;  // Keeps track of the independent variable.
+            double y_var = 0;  // Keeps track of the current value of the
+                               // function.
             // Loop and find the dot and cross product between every adjacent
             // vectors. Then use the results to compute the x,y of the turn
             // function.
@@ -68,8 +69,7 @@ class Polygons
     // Calculates the polygon's perimeter.
     public static double getPerimeter(LinkedList<Vector> vectors)
         {
-            // loop through list and add their lengths
-            // ignore first vector as it repeats at the end of the list
+            // Loop through list of vectors and add their lengths.
             double perimeter = 0;
             for(Vector v : vectors)
             {

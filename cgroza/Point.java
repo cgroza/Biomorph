@@ -44,7 +44,7 @@ public class Point
             double dP1P2 = distanceBetweenPoints(p1, p2);
             double dP2P3 = distanceBetweenPoints(p2, p3);
             double dP1P3 = distanceBetweenPoints(p1, p3);
-            // use the cosine law to find the angle formed by the three points.
+            // Use the cosine law to find the angle formed by the three points.
             // a^2 = b^2 + c^2 - 2bc cos A
             // cos A = (a^2 - b^2 - c^2)/(-2bc) =>
             // A = acos((a^2 - b^2 - c^2)/(-2bc))
