@@ -2,12 +2,15 @@ package cgroza;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import java.util.LinkedList;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import cgroza.Specimen;
 import cgroza.Genome;
 import cgroza.Config;
@@ -69,7 +72,25 @@ class SelectionFrame extends JFrame
             specimenPanel.add(s);
         }
         controlPanel = new JPanel(new FlowLayout());
+        JButton configButton = new JButton("Settings");
+        configButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                    {
+                        config.setVisible(true);
+                    }
+            });
+        JButton nextButton = new JButton("Next");
+        nextButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                    {
+                        nextGeneration();
+                    }
+            });
         generationDisplay = new JLabel(Integer.toString(generationCount));
+        controlPanel.add(configButton);
+        controlPanel.add(nextButton);
         controlPanel.add(generationDisplay);
         add(controlPanel, BorderLayout.NORTH);
         add(specimenPanel);

@@ -2,7 +2,8 @@
 ** TODO Create buttons in the control panel
 Next generation, settings and reset.
 
-** TODO Fix turning algorithm
+** DONE Fix turning algorithm
+CLOSED: [2015-06-26 Fri 12:23]
 - [X]Debug algorithm: measure counter-clockwise angle from previous to next.\\
   Use the cross product to differentiate concavity.
   [[https://en.wikipedia.org/wiki/Cross_product#/media/File:Cross_product.gif][Cross Product Description]] 
