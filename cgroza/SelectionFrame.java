@@ -17,7 +17,7 @@ import cgroza.Config;
 
 // SelectionFrame implements the main frame. It's sole purpose is to display
 // graphical elements.
-class SelectionFrame extends JFrame
+public class SelectionFrame extends JFrame
 {
     private JPanel specimenPanel;
     private JPanel controlPanel;
@@ -171,11 +171,5 @@ class SelectionFrame extends JFrame
             // Increment the generation number.
             generationCount ++;
             generationDisplay.setText(Integer.toString(generationCount));
-        }
-
-    // Main function. Starts program execution.
-    public static void main(String[] args)
-        {
-            SelectionFrame mainFrame = new SelectionFrame("Simulation");
         }
 }

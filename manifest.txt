@@ -1,0 +1,3 @@
+Permissions: sandbox
+Codebase: ./cgroza/
+Application-Name: Biomorph
