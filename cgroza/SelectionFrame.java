@@ -94,7 +94,6 @@ public class SelectionFrame extends JFrame
         controlPanel.add(generationDisplay);
         add(controlPanel, BorderLayout.NORTH);
         add(specimenPanel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 

@@ -30,7 +30,4 @@ public class Biomorph extends Applet
             SelectionFrame mainFrame = new SelectionFrame("Simulation");
             mainFrame.show();
         }
-    public void paint(Graphics g){
-            g.drawString("welcome",150,150);  
-        }  
 }
