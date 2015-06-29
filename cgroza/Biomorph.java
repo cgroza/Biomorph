@@ -1,4 +1,5 @@
 package cgroza;
+import java.awt.Graphics;
 import java.applet.Applet;
 import javax.swing.SwingUtilities;
 import cgroza.SelectionFrame;
@@ -29,4 +30,7 @@ public class Biomorph extends Applet
             SelectionFrame mainFrame = new SelectionFrame("Simulation");
             mainFrame.show();
         }
+    public void paint(Graphics g){
+            g.drawString("welcome",150,150);  
+        }  
 }
