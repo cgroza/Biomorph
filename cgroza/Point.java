@@ -5,7 +5,7 @@ import java.lang.Comparable;
 // of the turning function. Also contains vector related operations on points.
 public class Point 
 {
-    public int x, y;
+    public double x, y;
 
     // Copy constructor for deep copy. This is necessary for creating independent
     // copies of points that are not simply references to existing points.
@@ -14,13 +14,13 @@ public class Point
             x = p.x;
             y = p.y;
         }
-    public Point(int _x, int _y)
+    public Point(double _x, double _y)
         {
             x = _x;
             y = _y;
         }
     // General setter function.
-    public void setPosition(int _x, int _y)
+    public void setPosition(double _x, double _y)
         {
             x = _x;
             y = _y;

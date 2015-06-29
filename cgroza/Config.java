@@ -66,7 +66,7 @@ class GenomeDrawBoard extends JPanel
             Polygon polygon = new Polygon();
             for(Point p : points)
             {
-                polygon.addPoint(p.x, p.y);
+                polygon.addPoint((int) p.x, (int) p.y);
             }
             super.paintComponent(g);
             g.setColor(Color.BLACK);

@@ -14,6 +14,12 @@ class Vector
             angle = a;
             length = l;
         }
+    public Vector(Point p1, Point p2)
+        {
+            Vector v = Point.toVector(p1, p2);
+            angle = v.angle;
+            length = v.length;
+        }
     // Multiplies the length by s in order to scale the vector.  For example, to
     // scale a vector of length 2 to length 1, one calls scaleBy(0.5)
     public void scaleBy(double s)

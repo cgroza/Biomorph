@@ -11,20 +11,16 @@ import java.util.NoSuchElementException;
 import java.util.Collections;
 // Polar representation of Point. Only necesaary for topological sorting of
 // lists of points
-class PolarPoint implements Comparable
+class PolarPoint extends Vector implements Comparable
 {
+    // Associates the polar point with the corresponding Cartesian point.
     public Point point;
-    public double angle;
-    public double length;
 
     public PolarPoint(Point p, double centerX, double centerY )
         {
-            // Convert cartesian point into polar point.
-            point = p;
-            angle = Math.atan2(p.y - centerY, p.x - centerX);
+            super(p, new Point(centerX, centerY));
+            // Convert Cartesian point into polar point.
             if(angle < 0) angle += 2 * Math.PI;
-            length = Math.sqrt(Math.pow(p.x - centerX , 2) +
-                               Math.pow(p.y - centerY , 2));
         }
     // Comparison function used in clockwise sorting.
     public int compareTo(Object p)

@@ -70,7 +70,7 @@ public class Specimen extends JComponent
             Polygon polygon = new Polygon();
             for(Point p : genome.getPoints())
             {
-                polygon.addPoint(p.x, p.y);
+                polygon.addPoint((int) p.x, (int) p.y);
             }
             g.setColor(Color.RED);
             g.drawPolygon(polygon);
@@ -126,8 +126,8 @@ public class Specimen extends JComponent
                 if(p.x < smallestPX.x) smallestPX = p;
                 if(p.y < smallestPY.y) smallestPY = p;
             }
-            int xOffset = smallestPX.x - BORDER_WIDTH;
-            int yOffset = smallestPY.y - BORDER_WIDTH;
+            double xOffset = smallestPX.x - BORDER_WIDTH;
+            double yOffset = smallestPY.y - BORDER_WIDTH;
             // Offset all points by X, Y.
             for(Point p : points)
             {
