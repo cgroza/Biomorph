@@ -9,8 +9,8 @@ import cgroza.Vector;
 import cgroza.TurnPoint;
 import java.util.NoSuchElementException;
 import java.util.Collections;
-// Polar representation of Point. Only necesaary for topological sorting of
-// lists of points
+// Polar representation of Point. Only necessary for clockwise sorting of
+// lists of points. Represented as a vector.
 class PolarPoint extends Vector implements Comparable
 {
     // Associates the polar point with the corresponding Cartesian point.
@@ -19,7 +19,8 @@ class PolarPoint extends Vector implements Comparable
     public PolarPoint(Point p, double centerX, double centerY )
         {
             super(p, new Point(centerX, centerY));
-            // Convert Cartesian point into polar point.
+            // Convert negative angles to equivalent positive ones. Simplifies
+            // sorting clockwise.
             if(angle < 0) angle += 2 * Math.PI;
         }
     // Comparison function used in clockwise sorting.

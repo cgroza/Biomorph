@@ -36,23 +36,6 @@ public class Point
         {
             y += y_change;
         }
-    // Finds the angle between the segments formed by the three points. Specify
-    // the desired angle by calling the function with its corresponding point as
-    // the second argument. The angle is returned as radians.
-    public static double findAngle(Point p1, Point p2, Point p3)
-        {
-            double dP1P2 = distanceBetweenPoints(p1, p2);
-            double dP2P3 = distanceBetweenPoints(p2, p3);
-            double dP1P3 = distanceBetweenPoints(p1, p3);
-            // Use the cosine law to find the angle formed by the three points.
-            // a^2 = b^2 + c^2 - 2bc cos A
-            // cos A = (a^2 - b^2 - c^2)/(-2bc) =>
-            // A = acos((a^2 - b^2 - c^2)/(-2bc))
-            double angle = Math.acos((Math.pow(dP1P3, 2) - Math.pow(dP1P2, 2) - Math.pow(dP2P3, 2))
-                                     /(-2 * dP1P2 * dP2P3));
-            return angle;
-        }
-
     // Returns the vector formed by the two points. The vector starts at p1 and
     // points to p2.
     public static Vector toVector(Point p1, Point p2)
