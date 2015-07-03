@@ -3,6 +3,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import java.util.LinkedList;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
@@ -16,17 +18,18 @@ import cgroza.Genome;
 import cgroza.Config;
 
 // SelectionFrame implements the main frame. It's sole purpose is to display
-// graphical elements.
+// graphical elements and controls.
 public class SelectionFrame extends JFrame
 {
     private JPanel specimenPanel;
     private JPanel controlPanel;
     private JLabel generationDisplay;
+    private JLabel similarityDisplay;
     private Config config;
-    private static int H_SIZE = 6; // width of specimen grid
-    private static int V_SIZE = 6; // height of specimen grid 
+    private static int H_SIZE = 6; // Width of specimen grid.
+    private static int V_SIZE = 6; // Height of specimen grid.
     private LinkedList<Specimen> specimens;
-    // keeps track of the number of generations
+    // Keeps track of the number of generations.
     private int generationCount;
     // Constructor. Set size of frame and enable visibility.
     public SelectionFrame(String title){
@@ -34,7 +37,7 @@ public class SelectionFrame extends JFrame
         setSize(500, 500);
         generationCount = 0;
         config = new Config();
-        // add key listener as an anonymous class
+        // Add key listener as an anonymous class.
         addKeyListener(new KeyListener ()
             {
                 public void keyReleased(KeyEvent e)
@@ -88,9 +91,12 @@ public class SelectionFrame extends JFrame
                     }
             });
         generationDisplay = new JLabel(Integer.toString(generationCount));
+        similarityDisplay = new JLabel("-");
         controlPanel.add(configButton);
         controlPanel.add(nextButton);
         controlPanel.add(generationDisplay);
+        controlPanel.add(new JSeparator(SwingConstants.VERTICAL));
+        controlPanel.add(similarityDisplay);
         add(controlPanel, BorderLayout.NORTH);
         add(specimenPanel);
         setVisible(true);
@@ -105,13 +111,13 @@ public class SelectionFrame extends JFrame
             for(Specimen s : specimens)
             {
                 double d = targetGenome.getSimilarity(s.getGenome());
-                if(d < distance) // check if more similar than previous
+                if(d < distance) // Check if more similar than previous.
                 {
                     bestFit = s;
                     distance = d;
                 }
             }
-            System.out.println(distance);
+            similarityDisplay.setText(Double.toString(distance));
             return bestFit;
         }
     // Finds selected specimens depending of the current selection mode. 
@@ -120,8 +126,9 @@ public class SelectionFrame extends JFrame
             LinkedList<Specimen> selected = new LinkedList<Specimen>();
             SelectionMode mode = config.getSelectionMode();
             if(mode == SelectionMode.MANUAL)
-            { 
-                // get selected specimens
+            {
+                similarityDisplay.setText("NA");
+                // Get selected specimens.
                 for(Specimen s : specimens)
                 {
                     if(s.isSelected())
@@ -132,7 +139,7 @@ public class SelectionFrame extends JFrame
             {
                 for(Specimen s: specimens)
                     s.unselect();
-                // select the most similar specimen
+                // Select the most similar specimen.
                 Specimen mostSimilar = autoMostSimilar();
                 mostSimilar.select();
                 selected.add(mostSimilar);

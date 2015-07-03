@@ -117,8 +117,6 @@ public class Genome
             // create a deep copy of the list
             for(Point p : g.getPoints())
             {
-                if(p == null)
-                    System.out.println("NULL");
                 points.add(new Point(p));
             }
             nPoints = points.size();
