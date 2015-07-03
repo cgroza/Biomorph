@@ -1,8 +1,8 @@
 package cgroza;
 import java.lang.Math;
 import java.lang.Comparable;
-// Represents a vertex in a polygon and provides functions for the computation
-// of the turning function. Also contains vector related operations on points.
+// Represents a vertex in a polygon and provides methods for easily moving the 
+// coordinates of points. Also contains vector related operations on points.
 public class Point 
 {
     public double x, y;
@@ -46,6 +46,8 @@ public class Point
             return new Vector(angle, length);
         }
 
+    // Calculates the shortest distance between points using Pythagoras'
+    // theorem.
     public static double distanceBetweenPoints(Point p1, Point p2)
         {
            return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));

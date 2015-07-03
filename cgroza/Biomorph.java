@@ -4,6 +4,7 @@ import java.applet.Applet;
 import javax.swing.SwingUtilities;
 import cgroza.SelectionFrame;
 
+// Implements the java applet. Launches the SelectionFrame in a web browser.
 public class Biomorph extends Applet
 {
     public void init()

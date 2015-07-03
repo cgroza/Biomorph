@@ -7,8 +7,8 @@ import java.util.NoSuchElementException;
 // Rudimentary class to represent the points of the turning function.
 class TurnPoint
 {
-    public double x;
-    public double y;
+    public double x;            // Position along the perimeter.
+    public double y;            // Turn in angles. 
     TurnPoint(TurnPoint p)
         {
             x = p.x;
@@ -39,11 +39,14 @@ class TurnPoint
                 return new TurnPoint(x_, -Math.acos(dotP/(v2.length * v1.length)));
             // The turn function remains constant for 0 cross products.
             // Therefore, the turn point is 0.
-            else   
+            else
                 return new TurnPoint(x_, 0);
         }
 }
 
+// Represents the turn function for polygons. Provides methods for subtracting,
+// integrating, squaring, accessing the values and calculating the distance with
+// another turn function.
 public class TurnFunction
 {
     private LinkedList<TurnPoint> turnPoints;
@@ -116,6 +119,7 @@ public class TurnFunction
                         return left.y;
                     it.previous();
                 }
+                // Return last point.
                 catch(NoSuchElementException e)
                 {
                     return turnPoints.getLast().y;

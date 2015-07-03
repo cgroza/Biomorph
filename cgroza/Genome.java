@@ -19,6 +19,7 @@ class PolarPoint extends Vector implements Comparable
     public PolarPoint(Point p, double centerX, double centerY )
         {
             super(p, new Point(centerX, centerY));
+            point = p;
             // Convert negative angles to equivalent positive ones. Simplifies
             // sorting clockwise.
             if(angle < 0) angle += 2 * Math.PI;
@@ -116,6 +117,8 @@ public class Genome
             // create a deep copy of the list
             for(Point p : g.getPoints())
             {
+                if(p == null)
+                    System.out.println("NULL");
                 points.add(new Point(p));
             }
             nPoints = points.size();

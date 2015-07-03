@@ -56,12 +56,11 @@ public class SelectionFrame extends JFrame
         // Panel with grid layout to organize the specimens.
         specimenPanel = new JPanel(new GridLayout(H_SIZE, V_SIZE));
         // Create the specimens.
-        LinkedList<Point> startPs = new LinkedList();
+        LinkedList<Point> startPs = new LinkedList<Point>();
         // Stock specimen.
         startPs.add(new Point(15,15));
         startPs.add(new Point(15,60));
         startPs.add(new Point(30, 45));
-        startPs.add(new Point(30, 70));
         Genome startGenome = new Genome(startPs);
         specimens = new LinkedList<Specimen>();
         // Populate the specimen grid.
@@ -170,5 +169,10 @@ public class SelectionFrame extends JFrame
             // Increment the generation number.
             generationCount ++;
             generationDisplay.setText(Integer.toString(generationCount));
+        }
+    public static void main(String[] args)
+        {
+            SelectionFrame mainFrame = new SelectionFrame("Biomorph");
+            mainFrame.show();
         }
 }
