@@ -1,9 +1,9 @@
 package cgroza;
 import java.lang.Math;
 import java.lang.Comparable;
-// Represents a vertex in a polygon and provides methods for easily moving the 
+// Represents a vertex in a polygon and provides methods for easily moving the
 // coordinates of points. Also contains vector related operations on points.
-public class Point 
+public class Point
 {
     public double x, y;
 
@@ -19,13 +19,6 @@ public class Point
             x = _x;
             y = _y;
         }
-    // General setter function.
-    public void setPosition(double _x, double _y)
-        {
-            x = _x;
-            y = _y;
-        }
-
     // Changes the x coordinate by a constant.
     public void moveX(double x_change)
         {

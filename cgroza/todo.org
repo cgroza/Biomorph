@@ -7,7 +7,13 @@ CLOSED: [2015-06-26 Fri 12:23]
 - [X]Debug algorithm: measure counter-clockwise angle from previous to next.\\
   Use the cross product to differentiate concavity.
   [[https://en.wikipedia.org/wiki/Cross_product#/media/File:Cross_product.gif][Cross Product Description]] 
-- Create turning function for the reverse direction.
+- Create turning function for the reverse direction
+* Introduction
+** Application 
+Studying the effect of mutation rate on the number of generations required for adaptation.
+** Richard Dawkins' Weasel Program
+** Differences
+
 * Methods
 
 ** Polygons defined as lists of points
