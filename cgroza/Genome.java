@@ -2,16 +2,17 @@ package cgroza;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import cgroza.Point;
 import cgroza.Polygons;
 import cgroza.Vector;
 import cgroza.TurnPoint;
-import java.util.NoSuchElementException;
-import java.util.Collections;
 // Polar representation of Point. Only necessary for clockwise sorting of
 // lists of points. Represented as a vector.
-class PolarPoint extends Vector implements Comparable
+class PolarPoint extends Vector implements Comparable<PolarPoint>
 {
     // Associates the polar point with the corresponding Cartesian point.
     public Point point;
@@ -25,17 +26,17 @@ class PolarPoint extends Vector implements Comparable
             if(angle < 0) angle += 2 * Math.PI;
         }
     // Comparison function used in clockwise sorting.
-    public int compareTo(Object p)
+    public int compareTo(PolarPoint p)
         {
             // Compare points by angle. If angles are equal, compare by length.
             // If length is larger, then this PolarPoint is smaller and
             // vice-versa.
-            if (((PolarPoint) p).angle < angle) return 1;
-            else if (((PolarPoint) p).angle > angle) return -1;
+            if (p.angle < angle) return 1;
+            else if (p.angle > angle) return -1;
             else
             {
-                if (((PolarPoint) p).length < length) return -1;
-                else if (((PolarPoint) p).length > length) return 1;
+                if (p.length < length) return -1;
+                else if (p.length > length) return 1;
                 else return 0;
 
             }
@@ -77,6 +78,22 @@ class ClockwiseSort
         }
 }
 
+class GenomeComparator implements Comparator<Genome>
+{
+    private Genome targetGenome;
+    public GenomeComparator(Genome g)
+        {
+            targetGenome = g;
+        }
+    public int compare(Genome g1, Genome g2)
+        {
+            double g1Difference = targetGenome.getDifference(g1);
+            double g2Difference = targetGenome.getDifference(g2);
+            if(g1Difference - g2Difference < 0) return -1;
+            else return 1;
+        }
+
+}
 // "Flatland"-like genome. Shapes are guaranteed to be polygons. The polygons
 // are represented as a list of vertices implemented by the class Point. The
 // class is responsible for mutating and comparing itself with other genomes.
@@ -204,7 +221,7 @@ public class Genome
     // genome. The metric is called turning distance, a metric of similarity.
     // The smaller the value returned by this function, the more similar the
     // polygons. A value of 0 indicates exact equality.
-    public double getSimilarity(Genome g)
+    public double getDifference(Genome g)
         {
             LinkedList<Vector> sides = g.toVectorList();
             LinkedList<TurnPoint> turnPointsF1 = Polygons.getTurnPoints(toVectorList());

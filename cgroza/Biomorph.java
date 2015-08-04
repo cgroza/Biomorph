@@ -29,6 +29,6 @@ public class Biomorph extends Applet
     public void startBiomorph()
         {
             SelectionFrame mainFrame = new SelectionFrame("Simulation");
-            mainFrame.show();
+            mainFrame.setVisible(true);
         }
 }

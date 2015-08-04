@@ -1,4 +1,5 @@
 package cgroza;
+import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -107,10 +108,10 @@ public class SelectionFrame extends JFrame
         {
             Genome targetGenome = config.getTargetGenome();
             Specimen bestFit = specimens.peek();
-            double distance = targetGenome.getSimilarity(bestFit.getGenome());
+            double distance = targetGenome.getDifference(bestFit.getGenome());
             for(Specimen s : specimens)
             {
-                double d = targetGenome.getSimilarity(s.getGenome());
+                double d = targetGenome.getDifference(s.getGenome());
                 if(d < distance) // Check if more similar than previous.
                 {
                     bestFit = s;
@@ -146,24 +147,41 @@ public class SelectionFrame extends JFrame
             }
             return selected;
         }
-    // Creates a new array of specimens by mutating the selected ones
-    // repeatedly.
-    public void nextGeneration()
+    private LinkedList<Genome> getMutations()
         {
             LinkedList<Specimen> selected = getSelectedSpecimens();
             // Find number of offspring per selected specimen.
             int nSelected = selected.size();
-            if(nSelected == 0) return; // Nothing to do if no selection.
-
+            int offspringPerSelectedSpecimen = 0;
             int freeSpecimens = H_SIZE * V_SIZE - nSelected;
-            // Yields whole rounded down number.
-            int offspringPerSelectedSpecimen = freeSpecimens / nSelected;
-            // Generate mutations.
-            LinkedList<Genome> mutations = new LinkedList();
-            for(Specimen s : selected)
+            LinkedList<Genome> mutations = new LinkedList<Genome>();
+
+            switch (config.getSelectionMode())
             {
-                mutations.addAll(s.produceOffspring(offspringPerSelectedSpecimen));
+            case AUTO:
+                offspringPerSelectedSpecimen = 1000;
+                mutations.addAll(selected.element().produceOffspring(offspringPerSelectedSpecimen));
+                Collections.sort(mutations, new GenomeComparator(config.getTargetGenome()));
+                break;
+            case MANUAL:
+                offspringPerSelectedSpecimen = freeSpecimens / nSelected;
+                // Yields whole rounded down number.
+                // Generate mutations.
+                for(Specimen s : selected)
+                {
+                    mutations.addAll(s.produceOffspring(offspringPerSelectedSpecimen));
+                }
+                break;
             }
+            return mutations;
+        }
+    // Creates a new array of specimens by mutating the selected ones
+    // repeatedly.
+    public void nextGeneration()
+        {
+            LinkedList<Genome> mutations = getMutations();
+            LinkedList<Specimen> selected = getSelectedSpecimens();
+            if(mutations.isEmpty()) return;
             // Replace obsolete genomes.
             for(Specimen s : specimens)
             {
@@ -172,14 +190,14 @@ public class SelectionFrame extends JFrame
                     s.setGenome(mutations.removeFirst());
                 }
             }
-            getContentPane().repaint();
             // Increment the generation number.
             generationCount ++;
+            getContentPane().repaint();
             generationDisplay.setText(Integer.toString(generationCount));
         }
     public static void main(String[] args)
         {
             SelectionFrame mainFrame = new SelectionFrame("Biomorph");
-            mainFrame.show();
+            mainFrame.setVisible(true);
         }
 }
