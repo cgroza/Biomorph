@@ -78,6 +78,8 @@ class ClockwiseSort
         }
 }
 
+// GenomeComparator allows to sort lists of genomes in order of similarity with
+// a target genome. Used in the automatic selection algorithm.
 class GenomeComparator implements Comparator<Genome>
 {
     private Genome targetGenome;
@@ -85,14 +87,12 @@ class GenomeComparator implements Comparator<Genome>
         {
             targetGenome = g;
         }
+
     public int compare(Genome g1, Genome g2)
         {
-            double g1Difference = targetGenome.getDifference(g1);
-            double g2Difference = targetGenome.getDifference(g2);
-            if(g1Difference - g2Difference < 0) return -1;
-            else return 1;
+            return Double.compare(targetGenome.getDifference(g1),
+                                  targetGenome.getDifference(g2));
         }
-
 }
 // "Flatland"-like genome. Shapes are guaranteed to be polygons. The polygons
 // are represented as a list of vertices implemented by the class Point. The

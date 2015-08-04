@@ -121,6 +121,7 @@ public class SelectionFrame extends JFrame
             similarityDisplay.setText(Double.toString(distance));
             return bestFit;
         }
+
     // Finds selected specimens depending of the current selection mode. 
     public LinkedList<Specimen> getSelectedSpecimens()
         {
@@ -147,6 +148,10 @@ public class SelectionFrame extends JFrame
             }
             return selected;
         }
+
+    // Provides a list of mutations for the selected speciems. For manual mode,
+    // the number of new genomes is H_SIZE * V_SIZE. For automatic mode, the
+    // same number is chosen from a sorted list of 1000 mutations.
     private LinkedList<Genome> getMutations()
         {
             LinkedList<Specimen> selected = getSelectedSpecimens();
@@ -160,13 +165,15 @@ public class SelectionFrame extends JFrame
             {
             case AUTO:
                 offspringPerSelectedSpecimen = 1000;
+                // Only one specimen can be selected.
                 mutations.addAll(selected.element().produceOffspring(offspringPerSelectedSpecimen));
+                // Sort in decreasing order of similarity with the target genome.
                 Collections.sort(mutations, new GenomeComparator(config.getTargetGenome()));
                 break;
             case MANUAL:
-                offspringPerSelectedSpecimen = freeSpecimens / nSelected;
                 // Yields whole rounded down number.
-                // Generate mutations.
+                offspringPerSelectedSpecimen = freeSpecimens / nSelected;
+                // Generate mutations for every selected specime.
                 for(Specimen s : selected)
                 {
                     mutations.addAll(s.produceOffspring(offspringPerSelectedSpecimen));
@@ -175,6 +182,7 @@ public class SelectionFrame extends JFrame
             }
             return mutations;
         }
+
     // Creates a new array of specimens by mutating the selected ones
     // repeatedly.
     public void nextGeneration()
@@ -195,6 +203,7 @@ public class SelectionFrame extends JFrame
             getContentPane().repaint();
             generationDisplay.setText(Integer.toString(generationCount));
         }
+
     public static void main(String[] args)
         {
             SelectionFrame mainFrame = new SelectionFrame("Biomorph");
