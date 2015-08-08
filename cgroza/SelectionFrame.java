@@ -22,13 +22,20 @@ import cgroza.Config;
 // graphical elements and controls.
 public class SelectionFrame extends JFrame
 {
+    // Controls how many offspring are generated in the background. Only the
+    // most similar will be displayed in the selection frame.
+    public final int AUTO_NUMBER_OF_OFFSPRING = 100;
+    // GUI elements.
     private JPanel specimenPanel;
     private JPanel controlPanel;
     private JLabel generationDisplay;
     private JLabel similarityDisplay;
+    // User configuration.
     private Config config;
+    // Size of specimen grid.
     private static int H_SIZE = 6; // Width of specimen grid.
     private static int V_SIZE = 6; // Height of specimen grid.
+    // Stores specimens displayed in the grid.
     private LinkedList<Specimen> specimens;
     // Keeps track of the number of generations.
     private int generationCount;
@@ -152,7 +159,7 @@ public class SelectionFrame extends JFrame
     // Provides a list of mutations for the selected speciems. For manual mode,
     // the number of new genomes is H_SIZE * V_SIZE. For automatic mode, the
     // same number is chosen from a sorted list of 1000 mutations.
-    private LinkedList<Genome> getMutations()
+    private LinkedList<Genome> generateMutations()
         {
             LinkedList<Specimen> selected = getSelectedSpecimens();
             // Find number of offspring per selected specimen.
@@ -164,9 +171,8 @@ public class SelectionFrame extends JFrame
             switch (config.getSelectionMode())
             {
             case AUTO:
-                offspringPerSelectedSpecimen = 1000;
                 // Only one specimen can be selected.
-                mutations.addAll(selected.element().produceOffspring(offspringPerSelectedSpecimen));
+                mutations.addAll(selected.element().produceOffspring(AUTO_NUMBER_OF_OFFSPRING));
                 // Sort in decreasing order of similarity with the target genome.
                 Collections.sort(mutations, new GenomeComparator(config.getTargetGenome()));
                 break;
@@ -175,9 +181,7 @@ public class SelectionFrame extends JFrame
                 offspringPerSelectedSpecimen = freeSpecimens / nSelected;
                 // Generate mutations for every selected specime.
                 for(Specimen s : selected)
-                {
                     mutations.addAll(s.produceOffspring(offspringPerSelectedSpecimen));
-                }
                 break;
             }
             return mutations;
@@ -187,16 +191,14 @@ public class SelectionFrame extends JFrame
     // repeatedly.
     public void nextGeneration()
         {
-            LinkedList<Genome> mutations = getMutations();
+            LinkedList<Genome> mutations = generateMutations();
             LinkedList<Specimen> selected = getSelectedSpecimens();
             if(mutations.isEmpty()) return;
             // Replace obsolete genomes.
             for(Specimen s : specimens)
             {
                 if(!selected.contains(s))
-                {
                     s.setGenome(mutations.removeFirst());
-                }
             }
             // Increment the generation number.
             generationCount ++;
